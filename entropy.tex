@@ -42,17 +42,17 @@
   \end{block}
   Here we define $0 \log_2 0 = 0$.
 
-  In a sense, the entropy of a random variable shows how ``surprising'' the event is.
+  In a sense, the entropy of a random variable shows how ``uncertain'' the event is.
 \end{frame}
 
 \begin{frame}
   \frametitle{Examples}
   \begin{exampleblock}{Entropy of a fair coin}
-    A fair coin has entropy $\frac{1}{2} \log_2(2) + \frac{1}{2} \log_2(2) = 1$.
+    A fair coin has entropy $\frac{1}{2} \log(2) + \frac{1}{2} \log(2) = 1$.
   \end{exampleblock}
 
   \begin{exampleblock}{Entropy of a fair $m$-sided die}
-    A $m$-sided die has entropy $\log_2(m)$.
+    A $m$-sided die has entropy $\log m$.
   \end{exampleblock}
 
   \begin{exampleblock}{Entropy of $n$ fair coin flips}
@@ -64,7 +64,7 @@
   \frametitle{Examples}
 
   \begin{exampleblock}{Entropy of a Bernoulli trial}
-    If $X$ is a random variable taking values between 0 and 1, where $p(0) = p$ and $p(1) = 1 - p$, its entropy is \[ H_p = -p \log_2 p - (1 - p) \log_2 (1 - p). \]
+    If $X$ is a random variable taking values between 0 and 1, where $p(0) = p$ and $p(1) = 1 - p$, its entropy is \[ H(p) = -p \log p - (1 - p) \log (1 - p). \]
 
     \begin{center}
       \includegraphics[width=3cm]{bernoulli.png}
@@ -73,9 +73,9 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Example}
+  \frametitle{Examples}
   \begin{exampleblock}{Entropy of an unfair dice}
-    An unfair dice with four faces and \[ p(1) = 1/2, p(2) = 1/4, p(3) = 1/8, p(4) = 1/8 \] has entropy $7/4$, smaller than the one of the corresponding fair dice $2$. (This dice is less surprising than the fair dice.)
+    An unfair dice with four faces and \[ p(1) = 1/2, p(2) = 1/4, p(3) = 1/8, p(4) = 1/8 \] has entropy $7/4$, smaller than the one of the corresponding fair dice, which is $2$. (This dice is less uncertain than the fair dice.)
   \end{exampleblock}
 \end{frame}
 
@@ -104,28 +104,55 @@
 
 \begin{frame}
   \frametitle{TPM 15.7.3}
-  Let $\mathcal{F}$ be a family of subsets of $\{ 1, 2, \dotsc, n \}$ and let $p_i$ denote the fraction of sets in $\mathcal{F}$ that contain $i$. Then \[ |\mathcal{F}| \le 2^{\sum H(p_i)}. \]
+  Let $S$ be a family of subsets of $\{ 1, 2, \dotsc, n \}$ and let $p_i$ denote the fraction of sets in $S$ that contain $i$. Then \[ |S| \le 2^{\sum H(p_i)}. \]
 
   \begin{block}{Proof}
-    Let $X = (X_1, \dotsc, X_n)$ taking $F \in \mathcal{F}$ with equal probability. Then $H(X) \le \sum H(X_i)$ implies $\log |\mathcal{F}| \le \sum H(p_i)$.
+    Let $X = (X_1, \dotsc, X_n)$ take elements in $S$ with equal probability. Then $H(X) \le \sum H(X_i)$ implies $\log |S| \le \sum H(p_i)$.
   \end{block}
 \end{frame}
 
 \begin{frame}
   \frametitle{TPM 15.7.4}
-  Let $X = (X_1, \dotsc, X_n)$ taking values in $S = S_1 \times \dotsb \times S_n$, where each $X_i$ takes values in $S_i$. For an index set $I \subseteq \{ 1, 2, \dotsc, n \}$ let $X(I)$ denote $(X_i)_{i \in I}$. If $\mathcal{G}$ is a family of subsets of $\{ 1, \dotsc, n \}$ and each $i \in \{ 1, \dotsc, n \}$ belongs to at least $k$ members of $\mathcal{G}$, then \[ kH(X) \le \sum_{G \in \mathcal{G}} H(X(G)). \]
+  Let $X = (X_1, \dotsc, X_n)$ taking values in $S = S_1 \times \dotsb \times S_n$, where each $X_i$ takes values in $S_i$. For an index set $I \subseteq N = \{ 1, 2, \dotsc, n \}$ let $X(I)$ denote $(X_i)_{i \in I}$. If $T$ is a family of subsets of $N$ and each $i \in N$ belongs to at least $k$ members of $T$, then \[ kH(X) \le \sum_{G \in T} H(X(G)). \]
 
   \begin{block}{Proof}
-    Use induction. If there is $G \in \mathcal{G}$ where $G = \{ 1, \dotsc, n \}$ we are done. Otherwise, we prove \[ H(X(G \cup G')) + H(X(G \cap G')) \le H(X(G)) + H(X(G')). \]
+    Use induction. If there is $G \in S$ where $G = N$ we are done. Otherwise, we prove \[ H(X(G \cup G')) + H(X(G \cap G')) \le H(X(G)) + H(X(G')). \]
   \end{block}
 \end{frame}
 
 \begin{frame}
   \frametitle{TPM 15.7.5}
-  Let $\mathcal{F}$ be a family of vectors in $S_1 \times S_2 \times \dotsb \times S_n$. Let $\mathcal{G} = \{ G_1, G_2, \dotsc, G_m \}$ be a collection of subsets of $N = \{ 1, 2, \dotsc, n \}$, and suppose that each element $i \in N$ belongs to at least $k$ members of $\mathcal{G}$. For each $1 \le i \le m$ let $\mathcal{F}_i$ be the set of all projections of the members of $\mathcal{F}$ on $G_i$. Then \[ |\mathcal{F}|^k \le \prod_{i = 1}^m |\mathcal{F}_i|. \]
+  Take $F \subseteq S_1 \times S_2 \times \dotsb \times S_n$. Let $\mathcal{I} = \{ I_1, I_2, \dotsc, I_m \}$ be a collection of index sets (i.e. subsets of $N$), and suppose that each element $i \in N$ belongs to at least $k$ members of $\mathcal{I}$. For each $1 \le i \le m$ let $F_i$ be the set of all projections of the members of $F$ on $I_i$. Then \[ |F|^k \le \prod_{i = 1}^m |F_i|. \]
 
   \begin{block}{Proof}
-    Let $X = (X_1, \dotsc, X_n)$ taking $F \in \mathcal{F}$ with equal probability. Then $kH(X) \le \sum H(X(G_i))$ implies $k \log |\mathcal{F}| \le \sum \log |\mathcal{F}_i|$.
+    Let $X = (X_1, \dotsc, X_n)$ take elements of $F$ with equal probability. Then $kH(X) \le \sum H(X(I_i))$ implies $k \log |F| \le \sum \log |F_i|$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Corollaries of TPM 15.7.5}
+  Take $I_i = N - \{ i \}$ for all $i$, and notice that the volume of a set can be approximated by a fine enough aligned boxes.
+  \begin{block}{TPM 15.7.6}
+    Let $B$ be a measurable body in the $n$-dimensional Euclidean space, let $Vol(B)$ denote its ($n$-dimensional) volume, and let $Vol(B_i)$ denote the $(n - 1)$-dimensional volume of the projection of $B$ on the hyperplane spanned by all coordinates besides the $i$-th one. Then \[ (Vol(B))^{n - 1} \le \prod_{i = 1}^n Vol(B_i). \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Corollaries of TPM 15.7.5}
+  Take $S_i = \{ 0, 1 \}$ in TPM 15.7.5.
+  \begin{block}{TPM 15.7.7}
+    Let $F$ and $\mathcal{I} = \{ I_1, I_2, \dotsc, I_m \}$ be a collection of subsets of $N$. Suppose that each element of $N$ belongs to at least $k$ members of $\mathcal{I}$. For each $1 \le i \le m$, define $F_i = \{ f \cap I_i : f \in F \}.$ Then \[ |F|^k \le \prod_{i = 1}^m |F_i|. \]
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Corollaries of TPM 15.7.5}
+  \begin{block}{TPM 15.7.8}
+    Let $F$ be a family of graphs on the labeled set of vertices $\{ 1, \dotsc, t \}$, and suppose that for any two members of $F$ there is a triangle contained in both of them. Then \[ |F| < \frac{1}{4} 2^{\binom{t}{2}}. \]
+  \end{block}
+
+  \begin{block}{Proof}
+    Take $N$ to be the set of all edges of $K_t$ and $\mathcal{I}$ be edges of all possible $K_{\lf \frac{t}{2} \rf} \cup K_{\lc \frac{t}{2} \rc}$.
   \end{block}
 \end{frame}
 \end{document}
