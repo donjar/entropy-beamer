@@ -64,7 +64,7 @@
   \frametitle{Examples}
 
   \begin{exampleblock}{Entropy of a Bernoulli trial}
-    If $X$ is a random variable taking values between 0 and 1, where $p(0) = p$ and $p(1) = 1 - p$, its entropy is \[ H(p) = -p \log p - (1 - p) \log (1 - p). \]
+    If $X$ is a random variable taking values in $\{ 0, 1 \}$, where $p(0) = p$ and $p(1) = 1 - p$, its entropy is \[ H(p) = -p \log p - (1 - p) \log (1 - p). \]
 
     \begin{center}
       \includegraphics[width=3cm]{bernoulli.png}
@@ -89,7 +89,7 @@
   \end{enumerate}
   This is solved by $I(p) = - \log p$, up to the base of the logarithm. \pause
 
-  Now, suppose we have a distribution $X$, and we sample it $N$ times. The total amount of information we receive is $\sum N p_i I(p_i)$, and on average, we have $- \sum p_i \log p_i$.
+  Now, suppose we have a random variable $X$, and we sample from it $N$ times. The total amount of information we receive is $\sum N p_i I(p_i)$, and on average, we have $- \sum p_i \log p_i$.
 \end{frame}
 
 \begin{frame}
@@ -127,6 +127,15 @@
 \end{frame}
 
 \begin{frame}
+  \frametitle{Kleitman, Shearer, and Sturtevant 1981}
+  Let $\{ A_1, A_2, \dotsc, A_m \}$ be a collection of $k$-element sets such that if $\{ i, j \} \ne \{ p, q \}$, then $A_i \cap A_j \ne A_p \cap A_q$. Then $m = O \lp (2 - \varepsilon)^k \rp$ for some $\varepsilon > 0$. \pause
+
+  \begin{block}{Proof}
+    Let $f(p_i) = \binom{p_im}{2} / \binom{m}{2}$. $\log \binom{m}{2} \le \sum H(f(p_i)) \le \sum H(p_i^2) \le k \sum \lp \frac{p_i}{k} \rp \frac{H(p_i^2)}{p_i}$, then use Jensen.
+  \end{block}
+\end{frame}
+
+\begin{frame}
   \frametitle{TPM 15.7.4}
   Let $X = (X_1, \dotsc, X_n)$ taking values in $S = S_1 \times \dotsb \times S_n$, where each $X_i$ takes values in $S_i$. For an index set $I \subseteq N = \{ 1, 2, \dotsc, n \}$ let $X(I)$ denote $(X_i)_{i \in I}$. If $T$ is a family of subsets of $N$ and each $i \in N$ belongs to at least $k$ members of $T$, then \[ kH(X) \le \sum_{G \in T} H(X(G)). \] \pause
 
@@ -136,7 +145,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{TPM 15.7.5}
+  \frametitle{TPM 15.7.5 (Shearer 1978)}
   Take $F \subseteq S_1 \times S_2 \times \dotsb \times S_n$. Let $\mathcal{I} = \{ I_1, I_2, \dotsc, I_m \}$ be a collection of index sets (i.e. subsets of $N$), and suppose that each element $i \in N$ belongs to at least $k$ members of $\mathcal{I}$. For each $1 \le i \le m$ let $F_i$ be the set of all projections of the members of $F$ on $I_i$. Then \[ |F|^k \le \prod_{i = 1}^m |F_i|. \] \pause
 
   \begin{block}{Proof}
